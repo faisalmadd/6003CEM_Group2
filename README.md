@@ -2,13 +2,10 @@
 
 Web API Development
 
-Hotels and Flights Booking Website System
+Flights Booking Web System
 
 
 Main Features:
-
-* Hotels
-  - search and view hotels in the desired destination
 
 * Flights
   - search and view flights to the desired destination
