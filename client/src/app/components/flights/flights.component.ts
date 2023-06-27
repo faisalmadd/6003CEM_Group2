@@ -59,4 +59,32 @@ export class FlightsComponent implements OnInit {
     this.toLocation = [];
     this.departureDateTemplate = true;
   }
+
+  date: any = "";
+  flights: any;
+  flightTemplate: boolean = false
+
+  onFindFlight() {
+    if (this.date == "") {
+      alert("Please choose a date")
+    } else {
+      fetch(`http://localhost:5000/flight-search?originCode=${this.origin.iataCode}&destinationCode=${this.destination.iataCode}&dateOfDeparture=${this.date}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+      })
+      .then(response => response.json())
+      .then(data => {
+        this.flights = data.data
+        console.log(this.flights)
+        this.departureDateTemplate = false
+        this.flightTemplate = true
+      })
+      .catch((error) => {
+        alert(error)
+      });
+    }
+  }
+  
 }
