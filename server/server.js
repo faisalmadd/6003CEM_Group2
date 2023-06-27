@@ -1,8 +1,10 @@
 // Import necessary modules
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const Amadeus = require('amadeus');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import { check, validationResult } from 'express-validator';
+import Amadeus from 'amadeus';
+import rateLimit from "express-rate-limit";
 
 // Create Express instance
 const app = express();
@@ -16,6 +18,13 @@ app.use(cors({
     origin: 'http://localhost:4200'
 }));
 
+// Prevent DoS attacks by limiting number of requests
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+  });
+app.use(limiter);
+
 // Start server on port 5000
 app.listen(PORT, () =>
     console.log(`Server is running on port: http://localhost:${PORT}`)
@@ -28,7 +37,22 @@ const amadeus = new Amadeus({
 });
 
 // Defines a route handler for a GET request at the endpoint /city-and-airport-search/:parameter
-app.get(`/city-and-airport-search/:parameter`, (req, res) => {
+app.get(`/city-and-airport-search/:parameter`, [
+    // Validate input to prevent XSS or SQL injection attacks    
+    check('parameter')
+        .trim() // trims the input
+        .isLength({ min: 1 }) // checks for a minimum length of 1
+        .withMessage('Parameter is required')
+        .escape() // replaces all characters with escape sequences
+], (req, res) => {
+    // check for any validation errors
+    const errors = validationResult(req);
+
+    // If error, return a 400 response with the validation error messages
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     // Retrieves the parameter value
     const parameter = req.params.parameter;
     
