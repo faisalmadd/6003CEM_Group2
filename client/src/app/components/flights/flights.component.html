@@ -1,29 +1,46 @@
 <form>
         <div *ngIf="fromLocationTemplate">
+            <!-- ngIf directive to conditionally render the following HTML block based on the value of fromLocationTemplate -->
             <label for=""><h3>From where:</h3></label>
-            <input type="text" class="form-control" name="from" [(ngModel)]="from"     (keypress)="handleFromLocation()">
+            <!-- Label for the input field -->
+            <input type="text" class="form-control" name="from" [(ngModel)]="from" (keypress)="handleFromLocation()">
+            <!-- Input field for capturing the "from" location value and binding it to the "from" variable using ngModel -->
             <small>City or Airport search E.g. London</small>
+            <!-- Small text providing an example of the expected input format -->
             <div class="card mb-3 mt-3" *ngFor="let Location of fromLocation" (click)="handleOrigin(Location)">
+                <!-- Looping over the fromLocation array and rendering a card for each Location object -->
                 <div class="card-header"><b>Name:</b> {{ Location.name }}</div>
+                <!-- Displaying the name of the Location object in the card header -->
                 <div class="card-body">City Name: {{ Location.address.cityName }}
                     <br>
                     Country Name: {{ Location.address.countryName }}
                 </div>
+                <!-- Displaying the city name and country name of the Location object in the card body -->
                 <div class="card-footer"><b>SubType:</b> {{ Location.subType }}</div>
-              </div>
+                <!-- Displaying the subtype of the Location object in the card footer -->
+            </div>
         </div>
+    
 
         <div *ngIf="toLocationTemplate">
+            <!-- ngIf directive to conditionally render the following HTML block based on the value of toLocationTemplate -->
             <label for=""><h3>To where:</h3></label>
+            <!-- Label for the input field -->
             <input type="text" class="form-control" name="to" [(ngModel)]="to" (keypress)="handleToLocation()">
+            <!-- Input field for capturing the "to" location value and binding it to the "to" variable using ngModel -->
             <small>City or Airport search E.g. New york</small>
+            <!-- Small text providing an example of the expected input format -->
             <div class="card mb-3 mt-3" *ngFor="let Location of toLocation" (click)="handleDestination(Location)">
+                <!-- Looping over the toLocation array and rendering a card for each Location object -->
                 <div class="card-header"><b>Name:</b> {{ Location.name }}</div>
+                <!-- Displaying the name of the Location object in the card header -->
                 <div class="card-body">City Name: {{ Location.address.cityName }}
                     <br>
                     Country Name: {{ Location.address.countryName }}
                 </div>
+                <!-- Displaying the city name and country name of the Location object in the card body -->
                 <div class="card-footer"><b>SubType:</b> {{ Location.subType }}</div>
+                <!-- Displaying the subtype of the Location object in the card footer -->
            </div>
-        </div>
+        </div>        
 </form>
