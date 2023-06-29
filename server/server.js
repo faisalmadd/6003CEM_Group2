@@ -95,7 +95,7 @@ app.get(`/city-and-airport-search/:parameter`, [
         });
 });
 
-app.get(`/flight-search`, (req, res) => {
+app.get(`/flight-search`, authenticate, (req, res) => {
     const originCode = req.query.originCode;
     const destinationCode = req.query.destinationCode;
     const dateOfDeparture = req.query.dateOfDeparture
@@ -114,7 +114,7 @@ app.get(`/flight-search`, (req, res) => {
 });
 
 
-app.post(`/flight-confirmation`, (req, res) => {
+app.post(`/flight-confirmation`, authenticate, (req, res) => {
     const flight = req.body.flight
     // Confirm availability and price
     amadeus.shopping.flightOffers.pricing.post(

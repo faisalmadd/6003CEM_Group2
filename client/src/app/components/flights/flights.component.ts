@@ -72,6 +72,7 @@ export class FlightsComponent implements OnInit {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa('admin:qwe12345')
       }
       })
       .then(response => response.json())
