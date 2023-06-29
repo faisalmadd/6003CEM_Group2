@@ -9,14 +9,14 @@
             <!-- Small text providing an example of the expected input format -->
             <div class="card mb-3 mt-3" *ngFor="let Location of fromLocation" (click)="handleOrigin(Location)">
                 <!-- Looping over the fromLocation array and rendering a card for each Location object -->
-                <div class="card-header"><b>Name:</b> {{ Location.name }}</div>
+                <div class="card-header"><b>Name:</b> {{ Location.name + " " + Location.subType }}</div>
                 <!-- Displaying the name of the Location object in the card header -->
                 <div class="card-body">City Name: {{ Location.address.cityName }}
                     <br>
                     Country Name: {{ Location.address.countryName }}
                 </div>
                 <!-- Displaying the city name and country name of the Location object in the card body -->
-                <div class="card-footer"><b>SubType:</b> {{ Location.subType }}</div>
+                <div class="card-footer"><b>IATA Code:</b> {{ Location.iataCode }}</div>
                 <!-- Displaying the subtype of the Location object in the card footer -->
             </div>
         </div>
@@ -32,14 +32,14 @@
             <!-- Small text providing an example of the expected input format -->
             <div class="card mb-3 mt-3" *ngFor="let Location of toLocation" (click)="handleDestination(Location)">
                 <!-- Looping over the toLocation array and rendering a card for each Location object -->
-                <div class="card-header"><b>Name:</b> {{ Location.name }}</div>
+                <div class="card-header"><b>Name:</b> {{ Location.name + " " + Location.subType }}</div>
                 <!-- Displaying the name of the Location object in the card header -->
                 <div class="card-body">City Name: {{ Location.address.cityName }}
                     <br>
                     Country Name: {{ Location.address.countryName }}
                 </div>
                 <!-- Displaying the city name and country name of the Location object in the card body -->
-                <div class="card-footer"><b>SubType:</b> {{ Location.subType }}</div>
+                <div class="card-footer"><b>IATA Code::</b> {{ Location.iataCode }}</div>
                 <!-- Displaying the subtype of the Location object in the card footer -->
            </div>
         </div>        
