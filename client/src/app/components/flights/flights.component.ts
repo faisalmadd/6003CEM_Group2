@@ -107,6 +107,7 @@ export class FlightsComponent implements OnInit {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Basic ' + btoa('admin:qwe12345'),
           },
           body: JSON.stringify(data),
         })
@@ -119,6 +120,7 @@ export class FlightsComponent implements OnInit {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': 'Basic ' + btoa('admin:qwe12345'),
             },
             body: JSON.stringify(dataForBookingFlight),
           })
