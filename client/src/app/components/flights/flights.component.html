@@ -80,5 +80,11 @@
                     <div class="card-footer"><button class="btn btn-warning" (click)="onBookFlight(flight)" [ngStyle]="{'width': '100%'}">Book Flight</button></div>
               </div>
         </div>
+        
+        <div *ngIf="booked">
+            <div class="alert alert-success" role="alert">
+                Successfully Booked the flight
+              </div>
+        </div>
 
 </form>

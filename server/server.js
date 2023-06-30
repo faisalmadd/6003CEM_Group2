@@ -130,3 +130,62 @@ app.post(`/flight-confirmation`, authenticate, (req, res) => {
             res.send(response)
         })
 })
+
+app.post(`/flight-booking`, authenticate, (req, res) => {
+    // Book a flight
+  const flight = req.body.flight;
+  const name = req.body.name
+  
+    amadeus.booking.flightOrders
+      .post(
+        JSON.stringify({
+          data: {
+            type: 'flight-order',
+            flightOffers: [flight],
+            travelers: [
+              {
+                id: '1',
+                dateOfBirth: '1999-01-01',
+                name: {
+                  firstName: name.first,
+                  lastName: name.last
+                },
+                gender: 'MALE',
+                contact: {
+                  emailAddress: 'test@test.com',
+                  phones: [
+                    {
+                      deviceType: 'MOBILE',
+                      countryCallingCode: '60',
+                      number: '1234567'
+                    }
+                  ]
+                },
+                documents: [
+                  {
+                    documentType: 'PASSPORT',
+                    birthPlace: 'Malaysia',
+                    issuanceLocation: 'George Town',
+                    issuanceDate: '2015-04-14',
+                    number: '00000000',
+                    expiryDate: '2025-04-14',
+                    issuanceCountry: 'MY',
+                    validityCountry: 'MY',
+                    nationality: 'MY',
+                    holder: true
+                  }
+                ]
+              }
+            ]
+          }
+        })
+      )
+      .then(function (response) {
+        res.send(response.result);
+      })
+      .catch(function (response) {
+        res.send(response);
+      });
+  });
+
+
