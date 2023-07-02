@@ -6,6 +6,17 @@ import { check, validationResult } from 'express-validator';
 import Amadeus from 'amadeus';
 import rateLimit from "express-rate-limit";
 
+// Import DB
+import { FlightBooking } from './db.js';
+
+// Declare placeholder variables for data persistence
+var originCode = "";
+var destinationCode = "";
+var dateOfDeparture = "";
+var grandTotal = "";
+var bn = "";
+var duration = "";
+
 // Create Express instance
 const app = express();
 const PORT = 5000; // define server port number
@@ -96,9 +107,9 @@ app.get(`/city-and-airport-search/:parameter`, [
 });
 
 app.get(`/flight-search`, authenticate, (req, res) => {
-    const originCode = req.query.originCode;
-    const destinationCode = req.query.destinationCode;
-    const dateOfDeparture = req.query.dateOfDeparture
+    originCode = req.query.originCode;
+    destinationCode = req.query.destinationCode;
+    dateOfDeparture = req.query.dateOfDeparture;
     // Find the cheapest flights
     amadeus.shopping.flightOffersSearch.get({
         originLocationCode: originCode,
@@ -132,60 +143,88 @@ app.post(`/flight-confirmation`, authenticate, (req, res) => {
 })
 
 app.post(`/flight-booking`, authenticate, (req, res) => {
-    // Book a flight
   const flight = req.body.flight;
-  const name = req.body.name
-  
-    amadeus.booking.flightOrders
-      .post(
-        JSON.stringify({
-          data: {
-            type: 'flight-order',
-            flightOffers: [flight],
-            travelers: [
-              {
-                id: '1',
-                dateOfBirth: '1999-01-01',
-                name: {
-                  firstName: name.first,
-                  lastName: name.last
-                },
-                gender: 'MALE',
-                contact: {
-                  emailAddress: 'test@test.com',
-                  phones: [
-                    {
-                      deviceType: 'MOBILE',
-                      countryCallingCode: '60',
-                      number: '1234567'
-                    }
-                  ]
-                },
-                documents: [
-                  {
-                    documentType: 'PASSPORT',
-                    birthPlace: 'Malaysia',
-                    issuanceLocation: 'George Town',
-                    issuanceDate: '2015-04-14',
-                    number: '00000000',
-                    expiryDate: '2025-04-14',
-                    issuanceCountry: 'MY',
-                    validityCountry: 'MY',
-                    nationality: 'MY',
-                    holder: true
-                  }
-                ]
-              }
-            ]
-          }
-        })
-      )
-      .then(function (response) {
-        res.send(response.result);
-      })
-      .catch(function (response) {
-        res.send(response);
-      });
-  });
+  const name = req.body.name;
 
+  amadeus.booking.flightOrders.post(
+    JSON.stringify({
+      data: {
+        type: 'flight-order',
+        flightOffers: [flight],
+        travelers: [
+          {
+            id: '1',
+            dateOfBirth: '1999-01-01',
+            name: {
+              firstName: name.first,
+              lastName: name.last,
+            },
+            gender: 'MALE',
+            contact: {
+              emailAddress: 'test@test.com',
+              phones: [
+                {
+                  deviceType: 'MOBILE',
+                  countryCallingCode: '60',
+                  number: '1234567',
+                },
+              ],
+            },
+            documents: [
+              {
+                documentType: 'PASSPORT',
+                birthPlace: 'Malaysia',
+                issuanceLocation: 'George Town',
+                issuanceDate: '2015-04-14',
+                number: '00000000',
+                expiryDate: '2025-04-14',
+                issuanceCountry: 'MY',
+                validityCountry: 'MY',
+                nationality: 'MY',
+                holder: true,
+              },
+            ],
+          },
+        ],
+      },
+    })
+  )
+    .then(function (response) {
+      bn = response.data.associatedRecords[0].reference;
+      grandTotal = flight.price.grandTotal;
+      duration = flight.itineraries[0].duration;
+      console.log(response.data.associatedRecords[0].reference);
+      console.log(flight.price.grandTotal);
+      console.log(flight.itineraries[0].duration);
+      console.log(originCode);
+      console.log(destinationCode);
+
+      // Create a new instance of FlightBooking model
+      const flightBooking = new FlightBooking({
+        originLocation: originCode,
+        destinationLocation: destinationCode,
+        travelDate: dateOfDeparture,
+        price: grandTotal,
+        bookingNumber: bn,
+        travelerFirstName: name.first,
+        travelerLastName: name.last,
+        travelDuration: duration,
+      });
+
+      // Save the flight booking to MongoDB
+      flightBooking
+        .save()
+        .then((result) => {
+          console.log("Success", result);
+          res.sendStatus(200); // Send a success response
+        })
+        .catch((error) => {
+          console.log("Error", error);
+          res.sendStatus(500); // Send an error response
+        });
+    })
+    .catch(function (response) {
+      res.send(response);
+    });
+});
 
