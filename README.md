@@ -15,11 +15,12 @@ Main Features:
 
 To-do List:
 1) make sure we can call the required flights API [Done]
-2) make sure we can call the extra miscellaneous APIs (could be for hotel or flights) []
+2) make sure we can call the extra miscellaneous APIs (could be for hotel or flights) [Done]
 3) start with the foundation of the website UI [Done]
-4) begin implementing the UI with the API calls and all the required features []
+4) begin implementing the UI with the API calls and all the required features [Done]
 5) clean up the UI [Done]
 6) Add username and password auth for the express server API [Done]
 7) Add express-rate-limiter to prevent DoS attack [Done]
-8) Add validation to prevent XSS & SQL injection attacks []
-9) Connect and insert flight booking details to database []
+8) Add validation to prevent XSS & SQL injection attacks [Done]
+9) Connect and insert flight booking details to database [Done]
+10) Display the flight booking details in frontend []
