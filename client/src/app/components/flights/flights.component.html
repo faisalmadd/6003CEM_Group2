@@ -19,6 +19,20 @@
                 <div class="card-footer"><b>IATA Code:</b> {{ Location.iataCode }}</div>
                 <!-- Displaying the subtype of the Location object in the card footer -->
             </div>
+            <br><br><br>
+            <label for=""><h3>Flight History:</h3></label>
+            <div class="card mb-3 mt-3" *ngFor="let Location of fromLocation" onload="handleHistory()" >
+                <!-- Looping over the fromLocation array and rendering a card for each Location object -->
+                <div class="card-header"><b>Flight Number:</b> {{ Location.name + " " + Location.subType }}</div>
+                <!-- Displaying the flight number in the card header -->
+                <div class="card-body">Flight Origin: {{ Location.address.cityName }}
+                    <br>
+                    Flight Destination: {{ Location.address.countryName }}
+                </div>
+                <!-- Displaying the flight origin and flight destination of the Location object in the card body -->
+                <div class="card-footer"><b>Flight Date:</b> {{ Location.iataCode }}</div>
+                <!-- Displaying the flight date in the card footer -->
+            </div>
         </div>
     
 
@@ -86,5 +100,6 @@
                 Successfully Booked the flight
               </div>
         </div>
+
 
 </form>
