@@ -19,20 +19,22 @@
                 <div class="card-footer"><b>IATA Code:</b> {{ Location.iataCode }}</div>
                 <!-- Displaying the subtype of the Location object in the card footer -->
             </div>
-            <br><br><br>
+            <br><br><br><br><br>
             <label for=""><h3>Flight History:</h3></label>
-            <div class="card mb-3 mt-3" *ngFor="let Location of fromLocation" onload="handleHistory()" >
+            <div class="card mb-3 mt-3" *ngFor="let History of history"  >
                 <!-- Looping over the fromLocation array and rendering a card for each Location object -->
-                <div class="card-header"><b>Flight Number:</b> {{ Location.name + " " + Location.subType }}</div>
+                <div class="card-header"><b>Flight Number:</b> {{ History.bookingNumber }}</div>
                 <!-- Displaying the flight number in the card header -->
-                <div class="card-body">Flight Origin: {{ Location.address.cityName }}
+                <div class="card-body">Flight Origin: {{ History.originLocation }}
                     <br>
-                    Flight Destination: {{ Location.address.countryName }}
+                    Flight Destination: {{ History.destinationLocation }}
                 </div>
                 <!-- Displaying the flight origin and flight destination of the Location object in the card body -->
-                <div class="card-footer"><b>Flight Date:</b> {{ Location.iataCode }}</div>
+                <div class="card-footer"><b>Flight Date:</b> {{ History.travelDate }}</div>
                 <!-- Displaying the flight date in the card footer -->
             </div>
+            <br>
+            <button type="button" class="btn btn-warning" (click)="onClearHistory()" [ngStyle]="{'width': '100%', 'background-color':'orange'}"><b>Clear History</b></button>
         </div>
     
 
