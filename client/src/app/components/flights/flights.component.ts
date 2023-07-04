@@ -29,6 +29,18 @@ export class FlightsComponent implements OnInit {
     }
   }
 
+  handleHistory() {
+    if (this.from.length > 3) {
+      fetch(`http://localhost:5000/city-and-airport-search/${this.from}`, {
+        headers: {
+          'Authorization': 'Basic ' + btoa('admin:qwe12345')
+        }
+      })
+      .then(response => response.json())
+      .then(data => this.fromLocation = data.data);
+    }
+  }
+
   handleOrigin(location: any) {
     this.origin = location;
     this.fromLocationTemplate = false;
