@@ -100,6 +100,7 @@ app.get(`/city-and-airport-search/:parameter`, [
         })
         .then(function (response) {
             res.send(response.result);
+            console.log(response.result);
         })
         .catch(function (response) {
             res.send(response);
@@ -237,7 +238,6 @@ app.get('/history-search', async (req, res) => {
   })
   console.log('Success finding: ', history);
 });
-
 
 app.get(`/history-clear`, authenticate, (req, res) => {
 

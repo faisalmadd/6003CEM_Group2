@@ -11,10 +11,12 @@ export class FlightsComponent implements OnInit {
   origin: any;
   fromLocationTemplate: boolean = true;
   toLocationTemplate: boolean = false;
+  history: any = [];
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.handleHistory();
   }
 
   handleFromLocation() {
@@ -30,15 +32,23 @@ export class FlightsComponent implements OnInit {
   }
 
   handleHistory() {
-    if (this.from.length > 3) {
-      fetch(`http://localhost:5000/city-and-airport-search/${this.from}`, {
+    fetch(`http://localhost:5000/history-search`, {
         headers: {
           'Authorization': 'Basic ' + btoa('admin:qwe12345')
         }
-      })
-      .then(response => response.json())
-      .then(data => this.fromLocation = data.data);
-    }
+    })
+    .then(response => response.json())
+    .then(data => this.history = data.data);
+  }
+
+  onClearHistory() {
+    fetch(`http://localhost:5000/history-clear`, {
+        headers: {
+          'Authorization': 'Basic ' + btoa('admin:qwe12345')
+        }
+    })
+    .then(response => response.json())
+    window.location.reload();
   }
 
   handleOrigin(location: any) {
