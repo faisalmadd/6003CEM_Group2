@@ -215,16 +215,38 @@ app.post(`/flight-booking`, authenticate, (req, res) => {
       flightBooking
         .save()
         .then((result) => {
-          console.log("Success", result);
+          console.log("Success from server.js:", result);
           res.sendStatus(200); // Send a success response
         })
         .catch((error) => {
           console.log("Error", error);
           res.sendStatus(500); // Send an error response
         });
+
     })
     .catch(function (response) {
       res.send(response);
     });
 });
 
+app.get('/history-search', async (req, res) => {
+  const history = await FlightBooking.find()
+  res.status(200).send({
+    status: 'Success',
+    data: history,
+  })
+  console.log('Success finding: ', history);
+});
+
+
+app.get(`/history-clear`, authenticate, (req, res) => {
+
+  FlightBooking.deleteMany()
+      .then(res=> {
+        console.log("Success deleting all");
+      })
+      .catch((error) => {
+          console.log("Error deleting:", error);
+      });
+
+});

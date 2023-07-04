@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
-const db = 'mongodb+srv://faisal:faisal@testing.g8wd6a3.mongodb.net/WebAPIProject';
+//const db = 'mongodb+srv://faisal:faisal@testing.g8wd6a3.mongodb.net/WebAPIProject';
+const db = 'mongodb+srv://dbUser01:dbUser01@gettingstarted.zij0v.mongodb.net/WebAPIProject';
 
 mongoose.connect(db)
   .then(() => {
