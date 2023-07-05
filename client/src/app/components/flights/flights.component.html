@@ -19,15 +19,17 @@
                 <div class="card-footer"><b>IATA Code:</b> {{ Location.iataCode }}</div>
                 <!-- Displaying the subtype of the Location object in the card footer -->
             </div>
+
             <br><br><br><br><br>
+
             <label for=""><h3>Flight History:</h3></label>
             <div class="card mb-3 mt-3" *ngFor="let History of history"  >
                 <!-- Looping over the fromLocation array and rendering a card for each Location object -->
-                <div class="card-header"><b>Flight Number:</b> {{ History.bookingNumber }}</div>
+                <div class="card-header"><b>Booking Number:</b> {{ History.bookingNumber }}</div>
                 <!-- Displaying the flight number in the card header -->
-                <div class="card-body">Flight Origin: {{ History.originLocation }}
-                    <br>
-                    Flight Destination: {{ History.destinationLocation }}
+                <div class="card-body">{{ History.originLocation }}  &nbsp;&nbsp;=>&nbsp;&nbsp;    {{ History.destinationLocation }}  &nbsp;&nbsp;&nbsp;&nbsp;
+                    <br>    Travel Duration: {{ History.travelDuration }} <br>
+                    Name: {{ History.travelerFirstName + " " + History.travelerLastName }}
                 </div>
                 <!-- Displaying the flight origin and flight destination of the Location object in the card body -->
                 <div class="card-footer"><b>Flight Date:</b> {{ History.travelDate }}</div>
@@ -55,7 +57,7 @@
                     Country Name: {{ Location.address.countryName }}
                 </div>
                 <!-- Displaying the city name and country name of the Location object in the card body -->
-                <div class="card-footer"><b>IATA Code::</b> {{ Location.iataCode }}</div>
+                <div class="card-footer"><b>IATA Code:</b> {{ Location.iataCode }}</div>
                 <!-- Displaying the subtype of the Location object in the card footer -->
            </div>
         </div>        
