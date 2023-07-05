@@ -146,7 +146,9 @@ export class FlightsComponent implements OnInit {
             },
             body: JSON.stringify(dataForBookingFlight),
           })
-          .then(response => response.json())
+          .then(response => {}
+            //response.json()
+            )
           .then(data => {
             console.log('Success:', data);
             this.booked  = true;
